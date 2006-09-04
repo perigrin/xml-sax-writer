@@ -1,4 +1,3 @@
-
 ###
 # XML::SAX::Writer - SAX2 XML Writer
 # Robin Berjon <robin@knowscape.com>
@@ -214,8 +213,11 @@ sub skipped_entity {
     my $ent;
     if ($data->{Name} =~ m/^%/) {
         $ent = $data->{Name} . ';';
-    }
-    else {
+
+    } elsif ($data->{Name} eq '[dtd]') {
+	# ignoring
+
+    } else {
         $ent = '&' . $data->{Name} . ';';
     }
 
@@ -298,9 +300,13 @@ sub attribute_decl {
     my $data = shift;
     $self->_output_dtd;
 
+    # to be backward compatible with Perl SAX 2.0
+    $data->{Mode} = $data->{ValueDefault} 
+      if not(exists $data->{Mode}) and exists $data->{ValueDefault};
+
     # I think that param entities are normalized before this
     my $atd = "      <!ATTLIST " . $data->{eName} . ' ' . $data->{aName} . ' ';
-    $atd   .= $data->{Type} . ' ' . $data->{ValueDefault} . ' ';
+    $atd   .= $data->{Type} . ' ' . $data->{Mode} . ' ';
     $atd   .= $data->{Value} . ' ' if $data->{Value};
     $atd   .= " >\n";
     $atd = $self->{Encoder}->convert($atd);

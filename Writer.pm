@@ -13,7 +13,7 @@ use XML::Filter::BufferText qw();
 @XML::SAX::Writer::Exception::ISA = qw(XML::SAX::Exception);
 
 use vars qw($VERSION %DEFAULT_ESCAPE %COMMENT_ESCAPE);
-$VERSION = '0.44';
+$VERSION = '0.50';
 
 %DEFAULT_ESCAPE = (
                     '&'     => '&amp;',
