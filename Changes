@@ -6,8 +6,10 @@ Revision history for XML::SAX::Writer:
        (RT.cpan.org #18546)
      - attribute_decl expects Mode instead of ValueDefault property
        to fit to Perl SAX 2.1 (ValueDefault still supported)
-     - fixed make test failing with Text::Iconv 1.3 or higher
+     - fixed make test failure with Text::Iconv 1.3 or higher
        (RT.cpan.org #7436 and #9690)
+     - fixed make test failure on VMS
+       (RT.cpan.org #18663)
 
 0.43 - 0.44 fri 20020906 18:27
     - made the basic tests work again despite the fact we now return
