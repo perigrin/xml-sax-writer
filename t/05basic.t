@@ -48,7 +48,9 @@ isa_ok($w1->{Consumer}, 'XML::SAX::Writer::ConsumerInterface', 'consumer is set'
 # different inits (mostly for Consumer DWIM)
 $w1->{EncodeFrom} = 'iso-8859-1';
 $w1->start_document;
-isa_ok($w1->{Encoder}, 'Text::Iconv', 'iconv converter for real encoding');
+my $iconv_class = 'Text::Iconv';
+$iconv_class .= 'Ptr' if ($Text::Iconv::VERSION >= 1.3);
+isa_ok($w1->{Encoder}, $iconv_class, 'iconv converter for real encoding');
 
 $w1->{Output} = 'test_file_for_output';
 $w1->start_document;
