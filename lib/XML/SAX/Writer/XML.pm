@@ -123,7 +123,7 @@ sub end_element {
     else {
         $el = '</' . $data->{Name} . '>';
     }
-    $el = $self->{Encoder}->convert($el);
+    $el = $self->safeConvert($el);
     $self->{Consumer}->output($el);
     $self->{NSHelper}->popContext;
     $self->{BufferElement} = '';
@@ -148,7 +148,7 @@ sub characters {
     else {
         $char = $self->escape($char);
     }
-    $char = $self->{Encoder}->convert($char);
+    $char = $self->safeConvert($char);
     $self->{Consumer}->output($char);
 }
 #-------------------------------------------------------------------#
@@ -181,7 +181,7 @@ sub processing_instruction {
     $self->_output_dtd;
 
     my $pi = "<?$data->{Target} $data->{Data}?>";
-    $pi = $self->{Encoder}->convert($pi);
+    $pi = $self->safeConvert($pi);
     $self->{Consumer}->output($pi);
 }
 #-------------------------------------------------------------------#
@@ -196,7 +196,7 @@ sub ignorable_whitespace {
 
     my $char = $data->{Data};
     $char = $self->escape($char);
-    $char = $self->{Encoder}->convert($char);
+    $char = $self->safeConvert($char);
     $self->{Consumer}->output($char);
 }
 #-------------------------------------------------------------------#
@@ -221,7 +221,7 @@ sub skipped_entity {
         $ent = '&' . $data->{Name} . ';';
     }
 
-    $ent = $self->{Encoder}->convert($ent);
+    $ent = $self->safeConvert($ent);
     $self->{Consumer}->output($ent);
 
 }
@@ -248,7 +248,7 @@ sub notation_decl {
     }
     $not .= " >\n";
 
-    $not = $self->{Encoder}->convert($not);
+    $not = $self->safeConvert($not);
     $self->{Consumer}->output($not);
 }
 #-------------------------------------------------------------------#
@@ -271,8 +271,7 @@ sub unparsed_entity_decl {
     }
     $ent .= " NDATA $data->{Notation} >\n";
 
-
-    $ent = $self->{Encoder}->convert($ent);
+    $ent = $self->safeConvert($ent);
     $self->{Consumer}->output($ent);
 }
 #-------------------------------------------------------------------#
@@ -287,7 +286,8 @@ sub element_decl {
 
     # I think that param entities are normalized before this
     my $eld = "    <!ELEMENT " . $data->{Name} . ' ' . $data->{Model} . " >\n";
-    $eld = $self->{Encoder}->convert($eld);
+
+    $eld = $self->safeConvert($eld);
     $self->{Consumer}->output($eld);
 }
 #-------------------------------------------------------------------#
@@ -309,7 +309,8 @@ sub attribute_decl {
     $atd   .= $data->{Type} . ' ' . $data->{Mode} . ' ';
     $atd   .= $data->{Value} . ' ' if $data->{Value};
     $atd   .= " >\n";
-    $atd = $self->{Encoder}->convert($atd);
+
+    $atd = $self->safeConvert($atd);
     $self->{Consumer}->output($atd);
 }
 #-------------------------------------------------------------------#
@@ -324,7 +325,7 @@ sub internal_entity_decl {
 
     # I think that param entities are normalized before this
     my $ent = "    <!ENTITY " . $data->{Name} . ' \'' . $self->escape($data->{Value}) . "' >\n";
-    $ent = $self->{Encoder}->convert($ent);
+    $ent = $self->safeConvert($ent);
     $self->{Consumer}->output($ent);
 }
 #-------------------------------------------------------------------#
@@ -347,8 +348,7 @@ sub external_entity_decl {
     }
     $ent .= " >\n";
 
-
-    $ent = $self->{Encoder}->convert($ent);
+    $ent = $self->safeConvert($ent);
     $self->{Consumer}->output($ent);
 }
 #-------------------------------------------------------------------#
@@ -363,7 +363,7 @@ sub comment {
     $self->_output_dtd;
 
     my $cmt = '<!--' . $self->escapeComment($data->{Data}) . '-->';
-    $cmt = $self->{Encoder}->convert($cmt);
+    $cmt = $self->safeConvert($cmt);
     $self->{Consumer}->output($cmt);
 }
 #-------------------------------------------------------------------#
@@ -401,7 +401,7 @@ sub end_dtd {
     else {
         $dtd = ' ]>';
     }
-    $dtd = $self->{Encoder}->convert($dtd);
+    $dtd = $self->safeConvert($dtd);
     $self->{Consumer}->output($dtd);
     $self->{BufferDTD} = '';
 }
@@ -455,7 +455,7 @@ sub start_entity {
         $ent = '&' . $data->{Name} . ';';
     }
 
-    $ent = $self->{Encoder}->convert($ent);
+    $ent = $self->safeConvert($ent);
     $self->{Consumer}->output($ent);
 }
 #-------------------------------------------------------------------#
@@ -492,7 +492,7 @@ sub xml_decl {
         $xd .= '?>';
     }
 
-    $xd = $self->{Encoder}->convert($xd); # this may blow up
+    #$xd = $self->{Encoder}->convert($xd); # this may blow up
     $self->{Consumer}->output($xd);
 }
 #-------------------------------------------------------------------#
@@ -510,7 +510,7 @@ sub _output_element {
 
     if ($self->{BufferElement}) {
         my $el = $self->{BufferElement} . '>';
-        $el = $self->{Encoder}->convert($el);
+	$el = $self->safeConvert($el);
         $self->{Consumer}->output($el);
         $self->{BufferElement} = '';
     }
@@ -525,7 +525,7 @@ sub _output_dtd {
 
     if ($self->{BufferDTD}) {
         my $dtd = $self->{BufferDTD} . " [\n";
-        $dtd = $self->{Encoder}->convert($dtd);
+	$dtd = $self->safeConvert($dtd);
         $self->{Consumer}->output($dtd);
         $self->{BufferDTD} = '';
     }

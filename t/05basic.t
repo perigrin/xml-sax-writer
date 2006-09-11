@@ -83,7 +83,6 @@ eval { $w1->start_document; };
 ok($@, 'bad consumer');
 isa_ok($@, 'XML::SAX::Writer::Exception', 'bad consumer exception');
 
-
 # escaping
 my $esc1 = '<>&"\'';
 my $eq1  = '&lt;&gt;&amp;&quot;&apos;';

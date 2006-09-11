@@ -164,6 +164,22 @@ sub escapeComment {
 }
 #-------------------------------------------------------------------#
 
+#-------------------------------------------------------------------#
+# convert with check a return value
+#-------------------------------------------------------------------#
+sub safeConvert {
+    my $self = shift;
+    my $str = shift;
+
+    my $out = $self->{Encoder}->convert($str);
+    
+    if (!defined $out and defined $str) {
+	warn "Conversion error returned by Encoder [$self->{Encoder}], string: '$str'";
+	$out = '_LOST_DATA_';
+    }
+    return $out;
+}
+#-------------------------------------------------------------------#
 
 
 #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#

@@ -10,6 +10,8 @@ Revision history for XML::SAX::Writer:
        (RT.cpan.org #7436 and #9690)
      - fixed make test failure on VMS
        (RT.cpan.org #18663)
+     - fixed dropped output on encoding conversion errors
+       (RT.cpan.org #17177)
 
 0.43 - 0.44 fri 20020906 18:27
     - made the basic tests work again despite the fact we now return
