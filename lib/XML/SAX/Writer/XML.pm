@@ -1,7 +1,6 @@
 ###
 # XML::SAX::Writer - SAX2 XML Writer
 # Robin Berjon <robin@knowscape.com>
-# 26/11/2001 - v0.01
 ###
 
 package XML::SAX::Writer::XML;
@@ -557,9 +556,9 @@ Robin Berjon, robin@knowscape.com
 
 =head1 COPYRIGHT
 
-Copyright (c) 2001-2002 Robin Berjon. All rights reserved. This program is
-free software; you can redistribute it and/or modify it under the same
-terms as Perl itself.
+Copyright (c) 2001-2006 Robin Berjon nad Perl XML project. All rights reserved. 
+This program is free software; you can redistribute it and/or modify it under 
+the same terms as Perl itself.
 
 =head1 SEE ALSO
 

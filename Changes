@@ -1,7 +1,7 @@
+Revision history for XML::SAX::Writer
+-------------------------------------
 
-Revision history for XML::SAX::Writer:
-
-0.50 - 
+0.50 - Sep 14, 2006
      - fixed redundant skipped entity at start_dtd 
        (RT.cpan.org #18546)
      - attribute_decl expects Mode instead of ValueDefault property

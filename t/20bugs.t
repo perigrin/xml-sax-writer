@@ -38,11 +38,11 @@ $w->end_element({Name	=> 'root',
 $w->end_document;
 #print $out;
 
-ok($out eq "<root>$str1</root>", 'Latin 2 characters');
+ok($out eq "<root>$str1</root>", 'ASCII characters');
 
 
 ##################################################
-# encoding error - char not exist in a codepage
+# encoding error - char does not exist in a codepage
 $w = XML::SAX::Writer->new({
                              EncodeFrom  => 'utf-8',
                              EncodeTo    => $isoL1,
@@ -65,4 +65,4 @@ $w->end_element({Name	=> 'root',
 		 NamespaceURI => ''});
 $w->end_document;
 
-ok($out eq "<root>_LOST_DATA_</root>", 'ASCII characters');
+ok($out eq "<root>_LOST_DATA_</root>", 'Latin2 characters');
