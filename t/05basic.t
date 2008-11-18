@@ -6,7 +6,7 @@
 ###
 
 use strict;
-use Test::More tests => 27;
+use Test::More tests => 29;
 BEGIN { use_ok('XML::SAX::Writer'); }
 
 # VMS has different names for codepages
@@ -16,12 +16,13 @@ my $isoL2 = ($^O eq 'VMS') ? 'iso8859-2' : 'iso-8859-2';
 
 # default options of XML::SAX::Writer
 my $w1 = XML::SAX::Writer->new->{Handler};
+
 ok(        $w1->{EncodeFrom} eq 'utf-8',                       'default EncodeFrom');
 ok(        $w1->{EncodeTo}   eq 'utf-8',                       'default EncodeTo');
 isa_ok(    $w1->{Output},  'IO::Handle',                       'default Output');
 is_deeply( $w1->{Format},  {},                                 'default Format');
 is_deeply( $w1->{Escape},  \%XML::SAX::Writer::DEFAULT_ESCAPE, 'default Escape');
-
+is(        $w1->{QuoteCharecter},  q['],                       'default QuoteCharecter');
 
 # set default options of XML::SAX::Writer
 my %fmt2 = ( FooBar => 1 );
@@ -32,13 +33,14 @@ my $w2 = XML::SAX::Writer->new({
                                 Output      => $o2,
                                 Format      => \%fmt2,
                                 Escape      => {},
+                                QuoteCharecter => q["],
                               })->{Handler};
 ok(        $w2->{EncodeFrom} eq $isoL1, 'set EncodeFrom');
 ok(        $w2->{EncodeTo}   eq $isoL2, 'set EncodeTo');
 ok(        "$w2->{Output}"   eq  "$o2",       'set Output');
 is_deeply( $w2->{Format},   \%fmt2,           'set Format');
 is_deeply( $w2->{Escape},   {},               'set Escape');
-
+is(        $w2->{QuoteCharecter}, q["],       'set QuoteCharecter');
 
 # options after initialisation
 $w1->start_document;
@@ -87,10 +89,10 @@ isa_ok($@, 'XML::SAX::Writer::Exception', 'bad consumer exception');
 my $esc1 = '<>&"\'';
 my $eq1  = '&lt;&gt;&amp;&quot;&apos;';
 my $res1 = $w1->escape($esc1);
-ok($res1 eq $eq1, 'escaping (default)');
+is($res1, $eq1, 'escaping (default)');
 
 # converting
 my $conv = XML::SAX::Writer::NullConverter->new;
 my $str = 'TEST';
 my $res = $conv->convert($str);
-ok($str eq $res, 'noop converter');
+is($str, $res, 'noop converter');

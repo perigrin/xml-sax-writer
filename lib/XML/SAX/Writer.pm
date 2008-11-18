@@ -42,6 +42,8 @@ sub new {
     $opt->{EncodeTo}        ||= 'utf-8';
     $opt->{Format}          ||= {}; # needs options w/ defaults, we'll see later
     $opt->{Output}          ||= *{STDOUT}{IO};
+    $opt->{QuoteCharecter}  ||= q['];
+    
     eval "use $opt->{Writer};";
 
     my $obj = bless $opt, $opt->{Writer};
@@ -411,16 +413,16 @@ way as it helps keep SAX1 and SAX2 separated.
 
 =item * new(%hash)
 
-This is the constructor for this object.  It takes a number of
+This is the constructor for this object. Â It takes a number of
 parameters, all of which are optional.
 
 =item -- Output
 
-This parameter can be one of several things.  If it is a simple
+This parameter can be one of several things. Â If it is a simple
 scalar, it is interpreted as a filename which will be opened for
-writing.  If it is a scalar reference, output will be appended to this
-scalar.  If it is an array reference, output will be pushed onto this
-array as it is generated.  If it is a filehandle, then output will be
+writing. Â If it is a scalar reference, output will be appended to this
+scalar. Â If it is an array reference, output will be pushed onto this
+array as it is generated. Â If it is a filehandle, then output will be
 sent to this filehandle.
 
 Finally, it is possible to pass an object for this parameter, in which
@@ -434,7 +436,7 @@ If this parameter is not provided, then output is sent to STDOUT.
 
 This should be a hash reference where the keys are characters
 sequences that should be escaped and the values are the escaped form
-of the sequence.  By default, this module will escape the ampersand
+of the sequence. Â By default, this module will escape the ampersand
 (&), less than (<), greater than (>), double quote ("), and apostrophe
 ('). Note that some browsers don't support the &apos; escape used for
 apostrophes so that you should be careful when outputting XHTML.
@@ -456,8 +458,13 @@ This defaults to UTF-8, which works for US-ASCII as well.
 
 =item -- EncodeTo
 
-The character set encoding in which output should be encoded.  Again,
+The character set encoding in which output should be encoded. Â Again,
 this defaults to UTF-8.
+
+=item -- QuoteCharecter
+
+Set the charecter used to quote attributes. This defaults to single quotes (') 
+for backwards compatiblity.
 
 =back
 
@@ -624,11 +631,6 @@ than those that apply to regular content.
 =head1 TODO
 
     - proper UTF-16 handling
-
-    - make the quote character an option. By default it is here ', but
-    I know that a lot of people (for reasons I don't understand but
-    won't question :-) prefer to use ". (on most keyboards " is more
-    typing, on the rest it's often as much typing).
 
     - the formatting options need to be developed.
 
