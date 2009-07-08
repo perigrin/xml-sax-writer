@@ -100,7 +100,7 @@ sub start_element {
     # build a string from what we have, and buffer it
     my $el = '<' . $data->{Name};
     for my $k (keys %attr_hash) {
-        $el .= ' ' . $k . qq[=$self->{QuoteCharecter}] . $self->escape($attr_hash{$k}) . qq[$self->{QuoteCharecter}];
+        $el .= ' ' . $k . qq[=$self->{QuoteCharacter}] . $self->escape($attr_hash{$k}) . qq[$self->{QuoteCharacter}];
     }
 
     $self->{BufferElement} = $el;

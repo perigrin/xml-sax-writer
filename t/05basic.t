@@ -22,7 +22,7 @@ ok(        $w1->{EncodeTo}   eq 'utf-8',                       'default EncodeTo
 isa_ok(    $w1->{Output},  'IO::Handle',                       'default Output');
 is_deeply( $w1->{Format},  {},                                 'default Format');
 is_deeply( $w1->{Escape},  \%XML::SAX::Writer::DEFAULT_ESCAPE, 'default Escape');
-is(        $w1->{QuoteCharecter},  q['],                       'default QuoteCharecter');
+is(        $w1->{QuoteCharacter},  q['],                       'default QuoteCharacter');
 
 # set default options of XML::SAX::Writer
 my %fmt2 = ( FooBar => 1 );
@@ -33,14 +33,14 @@ my $w2 = XML::SAX::Writer->new({
                                 Output      => $o2,
                                 Format      => \%fmt2,
                                 Escape      => {},
-                                QuoteCharecter => q["],
+                                QuoteCharacter => q["],
                               })->{Handler};
 ok(        $w2->{EncodeFrom} eq $isoL1, 'set EncodeFrom');
 ok(        $w2->{EncodeTo}   eq $isoL2, 'set EncodeTo');
 ok(        "$w2->{Output}"   eq  "$o2",       'set Output');
 is_deeply( $w2->{Format},   \%fmt2,           'set Format');
 is_deeply( $w2->{Escape},   {},               'set Escape');
-is(        $w2->{QuoteCharecter}, q["],       'set QuoteCharecter');
+is(        $w2->{QuoteCharacter}, q["],       'set QuoteCharacter');
 
 # options after initialisation
 $w1->start_document;

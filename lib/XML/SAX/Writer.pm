@@ -5,14 +5,15 @@
 
 package XML::SAX::Writer;
 use strict;
+use vars qw($VERSION %DEFAULT_ESCAPE %COMMENT_ESCAPE);
+$VERSION = '0.52';
+
 use Text::Iconv             qw();
 use XML::SAX::Exception     qw();
 use XML::SAX::Writer::XML   qw();
 use XML::Filter::BufferText qw();
 @XML::SAX::Writer::Exception::ISA = qw(XML::SAX::Exception);
 
-use vars qw($VERSION %DEFAULT_ESCAPE %COMMENT_ESCAPE);
-$VERSION = '0.50';
 
 %DEFAULT_ESCAPE = (
                     '&'     => '&amp;',
@@ -42,7 +43,7 @@ sub new {
     $opt->{EncodeTo}        ||= 'utf-8';
     $opt->{Format}          ||= {}; # needs options w/ defaults, we'll see later
     $opt->{Output}          ||= *{STDOUT}{IO};
-    $opt->{QuoteCharecter}  ||= q['];
+    $opt->{QuoteCharacter}  ||= q['];
     
     eval "use $opt->{Writer};";
 
@@ -461,9 +462,9 @@ This defaults to UTF-8, which works for US-ASCII as well.
 The character set encoding in which output should be encoded.  Again,
 this defaults to UTF-8.
 
-=item -- QuoteCharecter
+=item -- QuoteCharacter
 
-Set the charecter used to quote attributes. This defaults to single quotes (') 
+Set the character used to quote attributes. This defaults to single quotes (') 
 for backwards compatiblity.
 
 =back
@@ -666,7 +667,7 @@ Robin Berjon, robin@knowscape.com
 
 =head1 COPYRIGHT
 
-Copyright (c) 2001-2006 Robin Berjon nad Perl XML project. All rights reserved. 
+Copyright (c) 2001-2006 Robin Berjon and Perl XML project. Some rights reserved. 
 This program is free software; you can redistribute it and/or modify it under 
 the same terms as Perl itself.
 
