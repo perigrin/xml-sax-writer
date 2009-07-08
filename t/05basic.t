@@ -6,7 +6,7 @@
 ###
 
 use strict;
-use Test::More tests => 29;
+use Test::More tests => 30;
 BEGIN { use_ok('XML::SAX::Writer'); }
 
 # VMS has different names for codepages
@@ -45,6 +45,12 @@ is(        $w2->{QuoteCharacter}, q["],       'set QuoteCharacter');
 # options after initialisation
 $w1->start_document;
 isa_ok($w1->{Encoder},  'XML::SAX::Writer::NullConverter', 'null converter for noop encoding');
+my $w3 = XML::SAX::Writer->new({
+                                EncodeFrom  => $isoL1,
+                                EncodeTo    => $isoL2,
+                              })->{Handler};
+$w3->start_document;
+isa_ok($w3->{Encoder},  'XML::SAX::Writer::Encode',        'converter for encoding using Encode');
 isa_ok($w1->{NSHelper}, 'XML::NamespaceSupport',           'ns support');
 ok(ref($w1->{EscaperRegex}) eq 'Regexp',                    'escaper regex');
 ok(ref($w1->{NSDecl})       eq 'ARRAY',                    'ns stack');
@@ -54,9 +60,6 @@ isa_ok($w1->{Consumer}, 'XML::SAX::Writer::ConsumerInterface', 'consumer is set'
 # different inits (mostly for Consumer DWIM)
 $w1->{EncodeFrom} = $isoL1;
 $w1->start_document;
-my $iconv_class = 'Text::Iconv';
-$iconv_class .= 'Ptr' if ($Text::Iconv::VERSION >= 1.3);
-isa_ok($w1->{Encoder}, $iconv_class, 'iconv converter for real encoding');
 
 $w1->{Output} = 'test_file_for_output';
 $w1->start_document;
@@ -92,7 +95,14 @@ my $res1 = $w1->escape($esc1);
 is($res1, $eq1, 'escaping (default)');
 
 # converting
-my $conv = XML::SAX::Writer::NullConverter->new;
-my $str = 'TEST';
-my $res = $conv->convert($str);
-is($str, $res, 'noop converter');
+my $conv1 = XML::SAX::Writer::NullConverter->new;
+my $str1 = 'TEST';
+my $res_1 = $conv1->convert($str1);
+is($str1, $res_1, 'noop converter');
+
+my $conv2 = XML::SAX::Writer::Encode->new('iso-8859-1', 'utf-8');
+my $str2 = 'Cönvert';
+my $res_2 = $conv2->convert($str2);
+use Encode;
+Encode::from_to($str2, 'iso-8859-1', 'utf-8');
+is($str2, $res_2, 'Encode converter');

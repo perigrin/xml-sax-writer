@@ -8,7 +8,7 @@ use strict;
 use vars qw($VERSION %DEFAULT_ESCAPE %COMMENT_ESCAPE);
 $VERSION = '0.52';
 
-use Text::Iconv             qw();
+use Encode                  qw();
 use XML::SAX::Exception     qw();
 use XML::SAX::Writer::XML   qw();
 use XML::Filter::BufferText qw();
@@ -70,7 +70,7 @@ sub setConverter {
     my $self = shift;
 
     if (lc($self->{EncodeFrom}) ne lc($self->{EncodeTo})) {
-        $self->{Encoder} = Text::Iconv->new($self->{EncodeFrom}, $self->{EncodeTo});
+        $self->{Encoder} = XML::SAX::Writer::Encode->new($self->{EncodeFrom}, $self->{EncodeTo});
     }
     else {
         $self->{Encoder} = XML::SAX::Writer::NullConverter->new;
@@ -363,6 +363,29 @@ sub finalize {
 package XML::SAX::Writer::NullConverter;
 sub new     { return bless [], __PACKAGE__ }
 sub convert { $_[1] }
+
+
+#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
+#`,`, Encode Converter ,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,#
+#```````````````````````````````````````````````````````````````````#
+
+package XML::SAX::Writer::Encode;
+sub new {
+    my $class = shift;
+    my $self = {
+        from_enc => shift,
+        to_enc => shift,
+    };
+    return bless $self, $class;
+}
+sub convert {
+    my $self = shift;
+    my $data = shift;
+    eval {
+        Encode::from_to( $data, $self->{from_enc}, $self->{to_enc}, Encode::FB_CROAK );
+    };
+    return $@ ? undef : $data;
+};
 
 
 1;
