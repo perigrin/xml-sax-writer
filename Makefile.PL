@@ -9,4 +9,6 @@ requires 'XML::NamespaceSupport'   => '1.00';
 requires 'XML::Filter::BufferText' => '1.00';
 build_requires 'Test::More'              => '0.40';
 
+auto_set_repository;
+auto_manifest;
 WriteAll;

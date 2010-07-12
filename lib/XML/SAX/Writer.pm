@@ -6,7 +6,7 @@
 package XML::SAX::Writer;
 use strict;
 use vars qw($VERSION %DEFAULT_ESCAPE %COMMENT_ESCAPE);
-$VERSION = '0.52';
+$VERSION = '0.53';
 
 use Encode                  qw();
 use XML::SAX::Exception     qw();
@@ -661,13 +661,6 @@ than those that apply to regular content.
     - test, test, test (and then some tests)
 
     - doc, doc, doc (actually this part is in better shape)
-
-    - add support for Perl 5.7's Encode module so that we can use it
-    instead of Text::Iconv. Encode is more complete and likely to be
-    better supported overall. This will be done using a pluggable
-    encoder (so that users can provide their own if they want to)
-    and detecter both in Makefile.PL requirements and in the module
-    at runtime.
 
     - remove the xml_decl and replace it with intelligent logic, as
     discussed on perl-xml

@@ -1,6 +1,10 @@
 Revision history for XML::SAX::Writer
 -------------------------------------
 
+0.53 - 2010-07-12
+     - Switch from Text::IconV to Encode (David Pinkowitz)
+     - Update package Module::Install metadata discovery
+
 0.52 - 2008-11-19
      - Fix spelling of QuoteCharacter
       
