@@ -389,6 +389,7 @@ sub convert {
 
 
 1;
+__END__
 #,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
 #`,`, Documentation `,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,#
 #```````````````````````````````````````````````````````````````````#
@@ -437,16 +438,16 @@ way as it helps keep SAX1 and SAX2 separated.
 
 =item * new(%hash)
 
-This is the constructor for this object.  It takes a number of
+This is the constructor for this object. It takes a number of
 parameters, all of which are optional.
 
 =item -- Output
 
-This parameter can be one of several things.  If it is a simple
+This parameter can be one of several things. If it is a simple
 scalar, it is interpreted as a filename which will be opened for
-writing.  If it is a scalar reference, output will be appended to this
-scalar.  If it is an array reference, output will be pushed onto this
-array as it is generated.  If it is a filehandle, then output will be
+writing. If it is a scalar reference, output will be appended to this
+scalar. If it is an array reference, output will be pushed onto this
+array as it is generated. If it is a filehandle, then output will be
 sent to this filehandle.
 
 Finally, it is possible to pass an object for this parameter, in which
@@ -460,7 +461,7 @@ If this parameter is not provided, then output is sent to STDOUT.
 
 This should be a hash reference where the keys are characters
 sequences that should be escaped and the values are the escaped form
-of the sequence.  By default, this module will escape the ampersand
+of the sequence. By default, this module will escape the ampersand
 (&), less than (<), greater than (>), double quote ("), and apostrophe
 ('). Note that some browsers don't support the &apos; escape used for
 apostrophes so that you should be careful when outputting XHTML.
@@ -482,7 +483,7 @@ This defaults to UTF-8, which works for US-ASCII as well.
 
 =item -- EncodeTo
 
-The character set encoding in which output should be encoded.  Again,
+The character set encoding in which output should be encoded. Again,
 this defaults to UTF-8.
 
 =item -- QuoteCharacter
@@ -588,10 +589,9 @@ and access it like:
 =head1 THE ENCODER INTERFACE
 
 Encoders can be plugged in to allow one to use one's favourite encoder
-object. Presently there are two encoders: Iconv and NullEncoder, and
-one based on C<Encode> ought to be out soon. They need to implement
-two methods, and may inherit from XML::SAX::Writer::NullConverter if
-they wish to
+object. Presently there are two encoders: Encode and NullEncoder. They
+need to implement two methods, and may inherit from
+XML::SAX::Writer::NullConverter if they wish to
 
 =over 4
 
@@ -604,6 +604,11 @@ Creates a new Encoder. The arguments are the chosen encodings.
 Converts that string and returns it.
 
 =back
+
+Note that the return value of the convert method is B<not> checked. Output may
+be truncated if a character couldn't be converted correctly. To avoid problems
+the encoder should take care encoding errors itself, for example by raising an
+exception.
 
 =head1 CUSTOM OUTPUT
 
