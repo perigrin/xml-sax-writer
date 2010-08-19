@@ -632,17 +632,17 @@ some initialisation if it needs it.
 
 This is used to set the proper converter for character encodings. The
 default implementation should suffice but you can override it. It must
-set C<$self->{Encoder}> to an Encoder object. Subclasses *should* call
+set C<< $self->{Encoder} >> to an Encoder object. Subclasses *should* call
 it.
 
 =item setConsumer
 
 Same as above, except that it is for the Consumer object, and that it
-must set C<$self->{Consumer}>.
+must set C<< $self->{Consumer} >>.
 
 =item setEscaperRegex
 
-Will initialise the escaping regex C<$self->{EscaperRegex}> based on
+Will initialise the escaping regex C<< $self->{EscaperRegex} >> based on
 what is needed.
 
 =item escape STRING
