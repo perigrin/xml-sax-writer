@@ -479,14 +479,14 @@ sub xml_decl {
     # also, there's order in the pseudo-attr
     my $xd = '';
     if ($data->{Version}) {
-        $xd .= "<?xml version='$data->{Version}'";
+        $xd .= "<?xml version=\"$data->{Version}\"";
         if ($data->{Encoding}) {
-            $xd .= " encoding='$data->{Encoding}'";
+            $xd .= " encoding=\"$data->{Encoding}\"";
         }
         if ($data->{Standalone}) {
-            $xd .= " standalone='$data->{Standalone}'";
+            $xd .= " standalone=\"$data->{Standalone}\"";
         }
-        $xd .= '?>';
+        $xd .= "?>\n";
     }
 
     #$xd = $self->{Encoder}->convert($xd); # this may blow up
