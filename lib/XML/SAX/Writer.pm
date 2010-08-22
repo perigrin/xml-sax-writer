@@ -332,7 +332,10 @@ package XML::SAX::Writer::FileConsumer;
 # new
 #-------------------------------------------------------------------#
 sub new {
-    my ( $proto, $file ) = ( shift, shift );
+    my ( $proto, $file, $opt ) = @_;
+    my $enc_to = (defined $opt and ref $opt eq 'HASH'
+                  and defined $opt->{EncodeTo}) ? $opt->{EncodeTo}
+                                                : 'utf-8';
 
     XML::SAX::Writer::Exception->throw(
         Message => "No filename provided to " . ref( $proto || $proto )
@@ -340,9 +343,10 @@ sub new {
 
     local *XFH;
 
-    open XFH, ">$file" or XML::SAX::Writer::Exception->throw(
+    open XFH, ">:encoding($enc_to)", $file
+      or XML::SAX::Writer::Exception->throw(
         Message => "Error opening file $file: $!"
-    );
+      );
 
     return $proto->SUPER::new( *{XFH}{IO}, @_ );
 }
