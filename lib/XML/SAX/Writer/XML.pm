@@ -443,9 +443,9 @@ sub start_entity {
     my $ent;
     if ($data->{Name} eq '[dtd]') {
         # we ignore the fact that we're dealing with an external
-        # DTD entity here, and prolly shouldn't write the DTD
+        # DTD entity here, and probably shouldn't write the DTD
         # events unless explicitly told to
-        # this will prolly change
+        # this will probably change
     }
     elsif ($data->{Name} =~ m/^%/) {
         $ent = $data->{Name} . ';';
@@ -556,7 +556,7 @@ Robin Berjon, robin@knowscape.com
 
 =head1 COPYRIGHT
 
-Copyright (c) 2001-2006 Robin Berjon nad Perl XML project. All rights reserved. 
+Copyright (c) 2001-2006 Robin Berjon and Perl XML project. All rights reserved. 
 This program is free software; you can redistribute it and/or modify it under 
 the same terms as Perl itself.
 
