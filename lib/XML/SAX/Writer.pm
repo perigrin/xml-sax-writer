@@ -489,7 +489,7 @@ this defaults to UTF-8.
 =item -- QuoteCharacter
 
 Set the character used to quote attributes. This defaults to single quotes (') 
-for backwards compatiblity.
+for backwards compatibility.
 
 =back
 
@@ -500,7 +500,7 @@ in charge of writing out what is formatted by this module. Setting a
 Consumer is done by setting the Output option to the object of your
 choice instead of to an array, scalar, or file handle as is more
 commonly done (internally those in fact map to Consumer classes and
-and simply available as options for your convienience).
+and simply available as options for your convenience).
 
 If you don't understand this, don't worry. You don't need it most of
 the time.
@@ -618,7 +618,7 @@ framework to output data, the opposite of a non-XML SAX parser.
 
 Of course there's only so much that one can abstract, so depending on
 your format this may or may not be useful. If it is, you'll need to
-know the followin API (and probably to have a look inside
+know the following API (and probably to have a look inside
 C<XML::SAX::Writer::XML>, the default Writer).
 
 =over
