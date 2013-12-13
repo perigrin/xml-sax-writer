@@ -1,13 +1,19 @@
 Revision history for XML::SAX::Writer
 -------------------------------------
 
+0.54 - 2013-12-13
+     - remove /o modifier on Regexps (RT#91382)
+     - Update to Dist::Zilla for releasing
+        - Clean up POD issues
+        - Simplify Makefile.PL
+        - Add cpanfile 
+
 0.53 - 2010-07-12
      - Switch from Text::IconV to Encode (David Pinkowitz)
      - Update package Module::Install metadata discovery
 
 0.52 - 2008-11-19
      - Fix spelling of QuoteCharacter
-      
 
 0.51 - 2008-11-19
      - Added QuoteCharecter parameter to new() to control quoting of
