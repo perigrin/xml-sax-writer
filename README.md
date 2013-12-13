@@ -27,17 +27,16 @@ who reported bugs and suggested fixes.
 Usage
 -----
 
-  use XML::SAX::Writer;
-  use XML::SAX::SomeDriver;
+>   use XML::SAX::Writer;
+>   use XML::SAX::SomeDriver;
+> 
+>   my $w = XML::SAX::Writer->new;
+>   my $d = XML::SAX::SomeDriver->new(Handler => $w);
+> 
+>   $d->parse('some options...');
 
-  my $w = XML::SAX::Writer->new;
-  my $d = XML::SAX::SomeDriver->new(Handler => $w);
-
-  $d->parse('some options...');
-
-See http://perl-xml.sourceforge.net/perl-sax/ for more details about
+See [http://perl-xml.sourceforge.net/perl-sax/]() for more details about
 Perl SAX 2.
- 
 
 License
 -------
