@@ -149,7 +149,7 @@ sub escape {
     my $self = shift;
     my $str  = shift;
 
-    $str =~ s/($self->{EscaperRegex})/$self->{Escape}->{$1}/oge;
+    $str =~ s/($self->{EscaperRegex})/$self->{Escape}->{$1}/ge;
     return $str;
 }
 #-------------------------------------------------------------------#
@@ -161,7 +161,7 @@ sub escapeComment {
     my $self = shift;
     my $str  = shift;
 
-    $str =~ s/($self->{CommentEscaperRegex})/$self->{CommentEscape}->{$1}/oge;
+    $str =~ s/($self->{CommentEscaperRegex})/$self->{CommentEscape}->{$1}/ge;
     return $str;
 }
 #-------------------------------------------------------------------#
