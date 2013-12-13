@@ -1,12 +1,9 @@
-###
-# XML::SAX::Writer - SAX2 XML Writer
-# Robin Berjon <robin@knowscape.com>
-###
-
 package XML::SAX::Writer;
 use strict;
 use vars qw($VERSION %DEFAULT_ESCAPE %COMMENT_ESCAPE);
 $VERSION = '0.53';
+
+# ABSTRACT: SAX2 XML Writer
 
 use Encode                  qw();
 use XML::SAX::Exception     qw();
@@ -396,10 +393,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-XML::SAX::Writer - SAX2 Writer
-
 =head1 SYNOPSIS
 
   use XML::SAX::Writer;
@@ -441,7 +434,7 @@ way as it helps keep SAX1 and SAX2 separated.
 This is the constructor for this object. It takes a number of
 parameters, all of which are optional.
 
-=item -- Output
+=item * Output
 
 This parameter can be one of several things. If it is a simple
 scalar, it is interpreted as a filename which will be opened for
@@ -457,7 +450,7 @@ INTERFACE>.
 
 If this parameter is not provided, then output is sent to STDOUT.
 
-=item -- Escape
+=item * Escape
 
 This should be a hash reference where the keys are characters
 sequences that should be escaped and the values are the escaped form
@@ -469,24 +462,24 @@ apostrophes so that you should be careful when outputting XHTML.
 If you only want to add entries to the Escape hash, you can first
 copy the contents of %XML::SAX::Writer::DEFAULT_ESCAPE.
 
-=item -- CommentEscape
+=item * CommentEscape
 
 Comment content often needs to be escaped differently from other
 content. This option works exactly as the previous one except that
 by default it only escapes the double dash (--) and that the contents
 can be copied from %XML::SAX::Writer::COMMENT_ESCAPE.
 
-=item -- EncodeFrom
+=item * EncodeFrom
 
 The character set encoding in which incoming data will be provided.
 This defaults to UTF-8, which works for US-ASCII as well.
 
-=item -- EncodeTo
+=item * EncodeTo
 
 The character set encoding in which output should be encoded. Again,
 this defaults to UTF-8.
 
-=item -- QuoteCharacter
+=item * QuoteCharacter
 
 Set the character used to quote attributes. This defaults to single quotes (') 
 for backwards compatibility.
@@ -565,7 +558,7 @@ reference to that data member.
         return $$self;
     }
 
-And here's one way to use it:
+And here is one way to use it:
 
     my $c = MyConsumer->new;
     my $w = XML::SAX::Writer->new( Output => $c );
@@ -681,16 +674,6 @@ Michael Koehne (XML::Handler::YAWriter) for much inspiration and Barrie
 Slaymaker for the Consumer pattern idea, the coderef output option and
 miscellaneous bugfixes and performance tweaks. Of course the usual
 suspects (Kip Hampton and Matt Sergeant) helped in the usual ways.
-
-=head1 AUTHOR
-
-Robin Berjon, robin@knowscape.com
-
-=head1 COPYRIGHT
-
-Copyright (c) 2001-2006 Robin Berjon and Perl XML project. Some rights reserved. 
-This program is free software; you can redistribute it and/or modify it under 
-the same terms as Perl itself.
 
 =head1 SEE ALSO
 
