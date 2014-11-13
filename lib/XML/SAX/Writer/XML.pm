@@ -1,17 +1,14 @@
-###
-# XML::SAX::Writer - SAX2 XML Writer
-# Robin Berjon <robin@knowscape.com>
-###
-
 package XML::SAX::Writer::XML;
 use strict;
 use XML::NamespaceSupport   qw();
 @XML::SAX::Writer::XML::ISA = qw(XML::SAX::Writer);
 
+# ABSTRACT: XML::SAX::Writer's SAX Handler
 
-#,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#
-#`,`, The SAX Handler `,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,`,#
-#```````````````````````````````````````````````````````````````````#
+###
+# Robin Berjon <robin@knowscape.com>
+###
+
 
 #-------------------------------------------------------------------#
 # start_document
