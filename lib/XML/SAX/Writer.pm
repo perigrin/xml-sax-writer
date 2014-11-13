@@ -1,7 +1,7 @@
 package XML::SAX::Writer;
+
 use strict;
-use vars qw($VERSION %DEFAULT_ESCAPE %COMMENT_ESCAPE);
-$VERSION = '0.53';
+use vars qw(%DEFAULT_ESCAPE %COMMENT_ESCAPE);
 
 # ABSTRACT: SAX2 XML Writer
 
@@ -207,6 +207,7 @@ sub finalize {}
 #```````````````````````````````````````````````````````````````````#
 
 package XML::SAX::Writer::StringConsumer;
+
 @XML::SAX::Writer::StringConsumer::ISA = qw(XML::SAX::Writer::ConsumerInterface);
 
 #-------------------------------------------------------------------#
@@ -236,6 +237,7 @@ sub finalize { ${$_[0]} }
 #```````````````````````````````````````````````````````````````````#
 
 package XML::SAX::Writer::CodeConsumer;
+
 @XML::SAX::Writer::CodeConsumer::ISA = qw(XML::SAX::Writer::ConsumerInterface );
 
 #-------------------------------------------------------------------#
@@ -266,6 +268,7 @@ sub finalize { ${$_[0]}->('end_document', '') }
 #```````````````````````````````````````````````````````````````````#
 
 package XML::SAX::Writer::ArrayConsumer;
+
 @XML::SAX::Writer::ArrayConsumer::ISA = qw(XML::SAX::Writer::ConsumerInterface);
 
 #-------------------------------------------------------------------#
@@ -296,6 +299,7 @@ sub finalize { return ${$_[0]} }
 #```````````````````````````````````````````````````````````````````#
 
 package XML::SAX::Writer::HandleConsumer;
+
 @XML::SAX::Writer::HandleConsumer::ISA = qw(XML::SAX::Writer::ConsumerInterface);
 
 #-------------------------------------------------------------------#
@@ -321,6 +325,7 @@ sub finalize { return 0 }
 #```````````````````````````````````````````````````````````````````#
 
 package XML::SAX::Writer::FileConsumer;
+
 @XML::SAX::Writer::FileConsumer::ISA = qw(XML::SAX::Writer::HandleConsumer);
 
 #-------------------------------------------------------------------#
@@ -358,6 +363,7 @@ sub finalize {
 #```````````````````````````````````````````````````````````````````#
 
 package XML::SAX::Writer::NullConverter;
+
 sub new     { return bless [], __PACKAGE__ }
 sub convert { $_[1] }
 
@@ -367,6 +373,7 @@ sub convert { $_[1] }
 #```````````````````````````````````````````````````````````````````#
 
 package XML::SAX::Writer::Encode;
+
 sub new {
     my ($class, $from, $to) = @_;
     my $self = {

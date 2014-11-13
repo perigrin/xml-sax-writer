@@ -1,4 +1,5 @@
 package XML::SAX::Writer::XML;
+
 use strict;
 use XML::NamespaceSupport   qw();
 @XML::SAX::Writer::XML::ISA = qw(XML::SAX::Writer);
