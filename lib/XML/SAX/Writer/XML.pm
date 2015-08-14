@@ -536,10 +536,6 @@ sub _output_dtd {
 
 =pod
 
-=head1 NAME
-
-XML::SAX::Writer::XML - SAX2 XML Writer
-
 =head1 SYNOPSIS
 
   ...
@@ -547,16 +543,6 @@ XML::SAX::Writer::XML - SAX2 XML Writer
 =head1 DESCRIPTION
 
 ...
-
-=head1 AUTHOR
-
-Robin Berjon, robin@knowscape.com
-
-=head1 COPYRIGHT
-
-Copyright (c) 2001-2006 Robin Berjon and Perl XML project. All rights reserved. 
-This program is free software; you can redistribute it and/or modify it under 
-the same terms as Perl itself.
 
 =head1 SEE ALSO
 
