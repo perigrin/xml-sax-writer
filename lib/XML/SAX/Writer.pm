@@ -1,6 +1,7 @@
 package XML::SAX::Writer;
 
 use strict;
+use warnings;
 use vars qw(%DEFAULT_ESCAPE %COMMENT_ESCAPE);
 
 # ABSTRACT: SAX2 XML Writer
