@@ -466,6 +466,11 @@ INTERFACE>.
 
 If this parameter is not provided, then output is sent to STDOUT.
 
+Note that there is no means to set an encoding layer on filehandles
+created by this module; if this is necessary, the calling code should
+first open a filehandle with the appropriate encoding set, and pass
+that filehandle to this module.
+
 =item * Escape
 
 This should be a hash reference where the keys are characters
