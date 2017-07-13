@@ -1,6 +1,7 @@
 package XML::SAX::Writer;
 
 use strict;
+use warnings;
 use vars qw(%DEFAULT_ESCAPE %ATTRIBUTE_ESCAPE %COMMENT_ESCAPE);
 
 # ABSTRACT: SAX2 XML Writer
@@ -366,7 +367,10 @@ package XML::SAX::Writer::FileConsumer;
 # new
 #-------------------------------------------------------------------#
 sub new {
-    my ( $proto, $file ) = ( shift, shift );
+    my ( $proto, $file, $opt ) = @_;
+    my $enc_to = (defined $opt and ref $opt eq 'HASH'
+                  and defined $opt->{EncodeTo}) ? $opt->{EncodeTo}
+                                                : 'utf-8';
 
     XML::SAX::Writer::Exception->throw(
         Message => "No filename provided to " . ref( $proto || $proto )
@@ -374,9 +378,10 @@ sub new {
 
     local *XFH;
 
-    open XFH, ">$file" or XML::SAX::Writer::Exception->throw(
+    open XFH, ">:encoding($enc_to)", $file
+      or XML::SAX::Writer::Exception->throw(
         Message => "Error opening file $file: $!"
-    );
+      );
 
     return $proto->SUPER::new( *{XFH}{IO}, @_ );
 }
@@ -494,6 +499,11 @@ interface L<described later in the documentation|/THE CONSUMER
 INTERFACE>.
 
 If this parameter is not provided, then output is sent to STDOUT.
+
+Note that there is no means to set an encoding layer on filehandles
+created by this module; if this is necessary, the calling code should
+first open a filehandle with the appropriate encoding set, and pass
+that filehandle to this module.
 
 =item * Escape
 
