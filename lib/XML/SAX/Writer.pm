@@ -2,7 +2,7 @@ package XML::SAX::Writer;
 
 use strict;
 use warnings;
-use vars qw(%DEFAULT_ESCAPE %COMMENT_ESCAPE);
+use vars qw(%DEFAULT_ESCAPE %ATTRIBUTE_ESCAPE %COMMENT_ESCAPE);
 
 # ABSTRACT: SAX2 XML Writer
 
@@ -21,6 +21,13 @@ use XML::Filter::BufferText qw();
                     "'"     => '&apos;',
                   );
 
+%ATTRIBUTE_ESCAPE = (
+                    %DEFAULT_ESCAPE,
+                    "\t"    => '&#x9;',
+                    "\n"    => '&#xA;',
+                    "\r"    => '&#xD;',
+                  );
+
 %COMMENT_ESCAPE = (
                     '--'    => '&#45;&#45;',
                   );
@@ -36,6 +43,7 @@ sub new {
     # default the options
     $opt->{Writer}          ||= 'XML::SAX::Writer::XML';
     $opt->{Escape}          ||= \%DEFAULT_ESCAPE;
+    $opt->{AttributeEscape} ||= \%ATTRIBUTE_ESCAPE;
     $opt->{CommentEscape}   ||= \%COMMENT_ESCAPE;
     $opt->{EncodeFrom}        = exists $opt->{EncodeFrom} ? $opt->{EncodeFrom} : 'utf-8';
     $opt->{EncodeTo}          = exists $opt->{EncodeTo}   ? $opt->{EncodeTo}   : 'utf-8';
@@ -127,6 +135,20 @@ sub setEscaperRegex {
 #-------------------------------------------------------------------#
 
 #-------------------------------------------------------------------#
+# setAttributeEscaperRegex
+#-------------------------------------------------------------------#
+sub setAttributeEscaperRegex {
+    my $self = shift;
+
+        $self->{AttributeEscaperRegex} = 
+            eval 'qr/'                                                         .
+            join( '|', map { $_ = "\Q$_\E" } keys %{$self->{AttributeEscape}}) .
+            '/;'                                                               ;
+    return $self;
+}
+#-------------------------------------------------------------------#
+
+#-------------------------------------------------------------------#
 # setCommentEscaperRegex
 #-------------------------------------------------------------------#
 sub setCommentEscaperRegex {
@@ -148,6 +170,18 @@ sub escape {
     my $str  = shift;
 
     $str =~ s/($self->{EscaperRegex})/$self->{Escape}->{$1}/ge;
+    return $str;
+}
+#-------------------------------------------------------------------#
+
+#-------------------------------------------------------------------#
+# escapeAttribute
+#-------------------------------------------------------------------#
+sub escapeAttribute {
+    my $self = shift;
+    my $str  = shift;
+
+    $str =~ s/($self->{AttributeEscaperRegex})/$self->{AttributeEscape}->{$1}/ge;
     return $str;
 }
 #-------------------------------------------------------------------#
